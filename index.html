@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/theme.css">
+    <title>Vue Stepper</title>
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="card">
+        <h1>План по изучению Vue.js</h1>
+  
+        <div class="steps">
+          <div class="steps-content">
+            {{ steps[activeIndex].text }}
+          </div>
+          <ul class="steps-list">
+            <li class="steps-item" 
+            v-for="(item, index) of steps" 
+            v-on:click="toggleActiveIndex" 
+            :class="{
+              'active': index === activeIndex,
+              'done': index < activeIndex,
+              '': index > activeIndex
+            }"
+            ><span>{{ index + 1 }}</span>  {{ item.title }}</li>
+          </ul>
+          <div>
+            <button class="btn" v-on:click="prev" v-if="activeIndex > 0 && isFinished !== true">{{ prevButton }}</button>
+            <button class="btn primary" v-on:click="nextOfFinish" v-if="activeIndex <= 3">{{ nextButton }}</button>
+            <button class="btn primary" v-if="activeIndex === 4 && isFinished !== true" v-on:click="finish">Закончить</button>
+            <button class="btn" v-if="isFinished === true" v-on:click="reset">Начать заново</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./src/main.js"></script>
+  </body>
+</html>
